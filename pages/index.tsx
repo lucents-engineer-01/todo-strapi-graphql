@@ -1,11 +1,30 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { gql, useQuery } from "@apollo/client";
+import { client } from "./api/apollo";
+const inter = Inter({ subsets: ["latin"] });
 
-const inter = Inter({ subsets: ['latin'] })
+export default function Home({ something }: any) {
+  const { loading, error, data } = useQuery(
+    gql`
+      query todos {
+        todos {
+          data {
+            id
+            attributes {
+              title
+            }
+          }
+        }
+      }
+    `,
+    {
+      client,
+    }
+  );
 
-export default function Home() {
   return (
     <>
       <Head>
@@ -26,7 +45,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -119,5 +138,28 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
+}
+
+export async function getServerSideProps() {
+  const { data } = await client.query({
+    query: gql`
+      query todos {
+        todos {
+          data {
+            id
+            attributes {
+              title
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      something: data,
+    },
+  };
 }
