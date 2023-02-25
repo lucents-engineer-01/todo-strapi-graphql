@@ -1,5 +1,9 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+set up graphql
+https://strapi.io/blog/how-to-build-a-to-do-app-using-next-js-and-strapi
+https://www.apollographql.com/blog/apollo-client/next-js/next-js-getting-started/
+
 ## Getting Started
 
 First, run the development server:
